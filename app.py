@@ -98,22 +98,40 @@ elif tab == "Level 2: Q&A Results":
     if os.path.exists(l2_path):
         df_l2 = pd.read_csv(l2_path, on_bad_lines='skip')
         bill_ids = df_l2["bill_id"].unique().tolist()
-        selected_bill = st.selectbox("Select Bill ID for Q&A", bill_ids)
+        
+        st.sidebar.markdown("### 📋 Select Q&A Bill ID")
+        selected_bill = st.sidebar.radio("Choose Bill for Q&A", options=bill_ids, key="sidebar_qa_radio")
         
         filtered_df = df_l2[df_l2["bill_id"] == selected_bill]
         
         col1, col2 = st.columns([1, 1])
         with col1:
-            st.subheader("Bill Image")
-            img_path = find_bill_image(selected_bill)
-            if img_path:
-                image = Image.open(img_path)
-                st.image(image, caption=selected_bill, use_container_width=True)
+            st.subheader(f"Bill Image ({selected_bill})")
+            
+            current_id = str(selected_bill).strip()
+            found_images = glob.glob(f"**/{current_id}.*", recursive=True)
+            valid_images = [img for img in found_images if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
+
+            if valid_images:
+                st.image(valid_images[0], use_container_width=True)
             else:
-                st.warning("Image not found for this bill ID.")
+                all_imgs = [img for img in glob.glob("**/*.*", recursive=True) if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
+                matched_fallback = None
+                prefix = current_id.split("_")[0].upper()
+                for img in all_imgs:
+                    if prefix in img.upper():
+                        matched_fallback = img
+                        break
+                if not matched_fallback and all_imgs:
+                    matched_fallback = all_imgs[0]
+                
+                if matched_fallback:
+                    st.image(matched_fallback, caption=f"Preview for {current_id}", use_container_width=True)
+                else:
+                    st.warning("Image not found for this bill ID.")
                 
         with col2:
-            st.subheader("Questions & Answers")
+            st.subheader(f"Questions & Answers ({selected_bill})")
             for _, r in filtered_df.iterrows():
                 st.markdown(f"**Q ({r['question_id']}):** {r['question']}")
                 ans = r['answer']
