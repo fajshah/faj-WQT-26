@@ -5,7 +5,7 @@ import glob
 from PIL import Image
 
 def find_bill_image(bill_id: str):
-    search_dirs = ["train_bills", "test/bills", "data/bills", "."]
+    search_dirs = ["test/bills", "train_bills", "bills", "data/bills", "."]
     extensions = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"]
     for d in search_dirs:
         for ext in extensions:
