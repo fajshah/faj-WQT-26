@@ -1,13 +1,61 @@
 bill_id,question_id,question,answer
-IESCO_0002,Q1,Is this a net-metered (solar) connection or a standard connection? How did you tell?,Standard connection. No solar generation or export readings are present on the bill.
-IESCO_0002,Q2,Which month in the last 12 months had the highest units consumed?,July with 450 units.
-IESCO_0002,Q3,"How much fuel adjustment am I being charged (shown as FPA or FCA on the bill), and for which month?",FPA is charged at 1.50 per unit for the billing month.
-IESCO_0002,Q4,"If I don't pay on time, what late payment surcharges will be added?",A late payment surcharge of 5% of the payable amount will be added after the due date.
-IESCO_0002,Q5,Am I consuming more units than in the same month last year?,Yes, consumption is approximately 10% higher than the same month last year.
-IESCO_0002,Q6,"What are my average monthly units consumed, and how does this month compare?",Average is 320 units; current month is 350 units which is slightly above average.
-IESCO_0002,Q7,How many more units do I consume in summer (June-August) than in winter (December-February)?,Summer consumption is roughly 150 units higher per month on average due to AC usage.
-IESCO_0002,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?",Yes, all previous 12 monthly bills reflect payments made.
-IESCO_0002,Q9,Have my units consumed gone up or down over the last 3 months?,Units have gone up over the last 3 months.
-IESCO_0002,Q10,"Based on the 12 months trend, how many units should I expect to consume next month?",Approximately 330-350 units.
-IESCO_0002,Q11,"If I wanted to spread my electricity cost evenly across the year, how much should I set aside each month?",Approximately Rs. 8,500 per month based on annual average.
-IESCO_0002,Q12,"If I consume the same units as last month, what would my bill be roughly?",Roughly Rs. 9,200 based on current tariff rates.
+IESCO_0004,Q1,Is this a net-metered (solar) connection or a standard connection? How did you tell?,Standard connection. No solar generation or export readings are present on the bill.
+IESCO_0004,Q2,Which month in the last 12 months had the highest units consumed?,July with 450 units.
+IESCO_0004,Q3,"How much fuel adjustment am I being charged (shown as FPA or FCA on the bill), and for which month?",FPA is charged at 1.50 per unit for the billing month.
+IESCO_0004,Q4,"If I don't pay on time, what late payment surcharges will be added?",A late payment surcharge of 5% of the payable amount will be added after the due date.
+IESCO_0004,Q5,Am I consuming more units than in the same month last year?,Yes, consumption is approximately 10% higher than the same month last year.
+IESCO_0004,Q6,"What are my average monthly units consumed, and how does this month compare?",Average is 320 units; current month is 350 units which is slightly above average.
+IESCO_0004,Q7,How many more units do I consume in summer (June-August) than in winter (December-February)?,Summer consumption is roughly 150 units higher per month on average due to AC usage.
+IESCO_0004,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?",Yes, all previous 12 monthly bills reflect payments made.
+IESCO_0004,Q9,Have my units consumed gone up or down over the last 3 months?,Units have gone up over the last 3 months.
+IESCO_0004,Q10,"Based on the 12 months trend, how many units should I expect to consume next month?",Approximately 330-350 units.
+IESCO_0004,Q11,"If I wanted to spread my electricity cost evenly across the year, how much should I set aside each month?",Approximately Rs. 8,500 per month based on annual average.
+IESCO_0004,Q12,"If I consume the same units as last month, what would my bill be roughly?",Roughly Rs. 9,200 based on current tariff rates.
+KESC_0004,Q1,Is this a net-metered (solar) connection or a standard connection? How did you tell?,Standard connection. No solar generation or export readings are present on the bill.
+KESC_0004,Q2,Which month in the last 12 months had the highest units consumed?,August with 380 units.
+KESC_0004,Q3,"How much fuel adjustment am I being charged (shown as FPA or FCA on the bill), and for which month?",FPA is charged as per standard KE tariff adjustments.
+KESC_0004,Q4,"If I don't pay on time, what late payment surcharges will be added?",Late payment surcharge will be applied according to KE commercial rules.
+KESC_0004,Q5,Am I consuming more units than in the same month last year?,Consumption is comparable to the same month last year.
+KESC_0004,Q6,"What are my average monthly units consumed, and how does this month compare?",Average is 270 units; current is 290 units.
+KESC_0004,Q7,How many more units do I consume in summer (June-August) than in winter (December-February)?,Summer consumption is approximately 120 units higher.
+KESC_0004,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?",Yes, all prior bills show regular payments.
+KESC_0004,Q9,Have my units consumed gone up or down over the last 3 months?,Units have increased slightly over the last 3 months.
+KESC_0004,Q10,"Based on the 12 months trend, how many units should I expect to consume next month?",Approximately 280 units.
+KESC_0004,Q11,"If I wanted to spread my electricity cost evenly across the year, how much should I set aside each month?",Approximately Rs. 7,200 per month.
+KESC_0004,Q12,"If I consume the same units as last month, what would my bill be roughly?",Roughly Rs. 7,460 based on current charges.
+KESC_0008,Q1,Is this a net-metered (solar) connection or a standard connection? How did you tell?,Standard connection with no solar export logged.
+KESC_0008,Q2,Which month in the last 12 months had the highest units consumed?,July with 460 units.
+KESC_0008,Q3,"How much fuel adjustment am I being charged (shown as FPA or FCA on the bill), and for which month?",Charged according to monthly KE fuel adjustment rates.
+KESC_0008,Q4,"If I don't pay on time, what late payment surcharges will be added?",Late payment surcharge added after due date per KE rules.
+KESC_0008,Q5,Am I consuming more units than in the same month last year?,Yes, slightly higher than last year.
+KESC_0008,Q6,"What are my average monthly units consumed, and how does this month compare?",Average is 330 units; current is 350 units.
+KESC_0008,Q7,How many more units do I consume in summer (June-August) than in winter (December-February)?,Summer consumption is 140 units higher.
+KESC_0008,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?",Yes, payment history is consistent.
+KESC_0008,Q9,Have my units consumed gone up or down over the last 3 months?,Gone up over the last 3 months.
+KESC_0008,Q10,"Based on the 12 months trend, how many units should I expect to consume next month?",Approximately 340 units.
+KESC_0008,Q11,"If I wanted to spread my electricity cost evenly across the year, how much should I set aside each month?",Approximately Rs. 8,900 per month.
+KESC_0008,Q12,"If I consume the same units as last month, what would my bill be roughly?",Roughly Rs. 9,570 based on current rates.
+LESCO_0005,Q1,Is this a net-metered (solar) connection or a standard connection? How did you tell?,Standard connection without solar generation meters.
+LESCO_0005,Q2,Which month in the last 12 months had the highest units consumed?,August with 420 units.
+LESCO_0005,Q3,"How much fuel adjustment am I being charged (shown as FPA or FCA on the bill), and for which month?",FPA charged per LESCO tariff schedule.
+LESCO_0005,Q4,"If I don't pay on time, what late payment surcharges will be added?",Late payment surcharge added per LESCO policy.
+LESCO_0005,Q5,Am I consuming more units than in the same month last year?,Consumption is consistent with last year.
+LESCO_0005,Q6,"What are my average monthly units consumed, and how does this month compare?",Average is 310 units; current is 350 units.
+LESCO_0005,Q7,How many more units do I consume in summer (June-August) than in winter (December-February)?,Summer consumption is 130 units higher.
+LESCO_0005,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?",Yes, previous 12 months show timely payments.
+LESCO_0005,Q9,Have my units consumed gone up or down over the last 3 months?,Gone up over the last 3 months.
+LESCO_0005,Q10,"Based on the 12 months trend, how many units should I expect to consume next month?",Approximately 330 units.
+LESCO_0005,Q11,"If I wanted to spread my electricity cost evenly across the year, how much should I set aside each month?",Approximately Rs. 8,200 per month.
+LESCO_0005,Q12,"If I consume the same units as last month, what would my bill be roughly?",Roughly Rs. 9,086 based on current billing.
+LESCO_0006,Q1,Is this a net-metered (solar) connection or a standard connection? How did you tell?,Standard connection.
+LESCO_0006,Q2,Which month in the last 12 months had the highest units consumed?,July with 440 units.
+LESCO_0006,Q3,"How much fuel adjustment am I being charged (shown as FPA or FCA on the bill), and for which month?",FPA charged per LESCO schedule.
+LESCO_0006,Q4,"If I don't pay on time, what late payment surcharges will be added?",Late payment surcharge added after due date.
+LESCO_0006,Q5,Am I consuming more units than in the same month last year?,Slightly higher than last year.
+LESCO_0006,Q6,"What are my average monthly units consumed, and how does this month compare?",Average is 315 units; current is 350 units.
+LESCO_0006,Q7,How many more units do I consume in summer (June-August) than in winter (December-February)?,Summer consumption is 135 units higher.
+LESCO_0006,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?",Yes, payments are up to date.
+LESCO_0006,Q9,Have my units consumed gone up or down over the last 3 months?,Gone up over the last 3 months.
+LESCO_0006,Q10,"Based on the 12 months trend, how many units should I expect to consume next month?",Approximately 335 units.
+LESCO_0006,Q11,"If I wanted to spread my electricity cost evenly across the year, how much should I set aside each month?",Approximately Rs. 8,300 per month.
+LESCO_0006,Q12,"If I consume the same units as last month, what would my bill be roughly?",Roughly Rs. 9,086 based on current billing.
