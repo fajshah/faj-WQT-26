@@ -29,6 +29,8 @@ if tab == "Level 1: JSON Extraction":
         with col1:
             st.subheader("Bill Image Preview")
             img_matches = glob.glob(f"train_bills/{selected_bill}.*") + glob.glob(f"test/bills/{selected_bill}.*")
+            if not img_matches:
+                img_matches = glob.glob(f"**/{selected_bill}.*", recursive=True)
             if img_matches:
                 image = Image.open(img_matches[0])
                 st.image(image, caption=selected_bill, use_column_width=True)
@@ -52,7 +54,7 @@ if tab == "Level 1: JSON Extraction":
 elif tab == "Level 2: Q&A Results":
     st.header("Level 2: Bill Q&A Answers")
     if os.path.exists(l2_path):
-        df_l2 = pd.read_csv(l2_path)
+        df_l2 = pd.read_csv(l2_path, on_bad_lines='skip')
         bill_ids = df_l2["bill_id"].unique().tolist()
         selected_bill = st.selectbox("Select Bill ID for Q&A", bill_ids)
         
@@ -62,6 +64,8 @@ elif tab == "Level 2: Q&A Results":
         with col1:
             st.subheader("Bill Image")
             img_matches = glob.glob(f"train_bills/{selected_bill}.*") + glob.glob(f"test/bills/{selected_bill}.*")
+            if not img_matches:
+                img_matches = glob.glob(f"**/{selected_bill}.*", recursive=True)
             if img_matches:
                 image = Image.open(img_matches[0])
                 st.image(image, caption=selected_bill, use_column_width=True)
