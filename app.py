@@ -4,6 +4,19 @@ import os
 import glob
 from PIL import Image
 
+def find_bill_image(bill_id: str):
+    search_dirs = ["train_bills", "test/bills", "data/bills", "."]
+    extensions = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"]
+    for d in search_dirs:
+        for ext in extensions:
+            path = os.path.join(d, f"{bill_id}{ext}")
+            if os.path.exists(path):
+                return path
+    matches = glob.glob(f"**/{bill_id}.*", recursive=True)
+    if matches:
+        return matches[0]
+    return None
+
 st.set_page_config(page_title="Utility Bill Decoder", page_icon="⚡", layout="wide")
 
 st.title("⚡ WTQ 2026 - Utility Bill Decoder Viewer")
@@ -28,12 +41,10 @@ if tab == "Level 1: JSON Extraction":
         
         with col1:
             st.subheader("Bill Image Preview")
-            img_matches = glob.glob(f"train_bills/{selected_bill}.*") + glob.glob(f"test/bills/{selected_bill}.*")
-            if not img_matches:
-                img_matches = glob.glob(f"**/{selected_bill}.*", recursive=True)
-            if img_matches:
-                image = Image.open(img_matches[0])
-                st.image(image, caption=selected_bill, use_column_width=True)
+            img_path = find_bill_image(selected_bill)
+            if img_path:
+                image = Image.open(img_path)
+                st.image(image, caption=selected_bill, use_container_width=True)
             else:
                 st.warning("Image not found for this bill ID.")
                 
@@ -63,14 +74,12 @@ elif tab == "Level 2: Q&A Results":
         col1, col2 = st.columns([1, 1])
         with col1:
             st.subheader("Bill Image")
-            img_matches = glob.glob(f"train_bills/{selected_bill}.*") + glob.glob(f"test/bills/{selected_bill}.*")
-            if not img_matches:
-                img_matches = glob.glob(f"**/{selected_bill}.*", recursive=True)
-            if img_matches:
-                image = Image.open(img_matches[0])
-                st.image(image, caption=selected_bill, use_column_width=True)
+            img_path = find_bill_image(selected_bill)
+            if img_path:
+                image = Image.open(img_path)
+                st.image(image, caption=selected_bill, use_container_width=True)
             else:
-                st.warning("Image not found.")
+                st.warning("Image not found for this bill ID.")
                 
         with col2:
             st.subheader("Questions & Answers")
