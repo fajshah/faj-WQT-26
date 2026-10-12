@@ -38,14 +38,16 @@ if tab == "Level 1: JSON Extraction":
     if os.path.exists(l1_path):
         df_l1 = pd.read_csv(l1_path)
         bill_ids_list = df_l1["bill_id"].tolist()
-        selected_bill_id = st.selectbox("Select Bill ID", options=bill_ids_list)
+        
+        st.sidebar.markdown("### 📋 Select Bill ID")
+        selected_bill_id = st.sidebar.radio("Choose Bill", options=bill_ids_list, key="sidebar_bill_radio")
         
         filtered_row = df_l1[df_l1['bill_id'] == selected_bill_id]
         
         col1, col2 = st.columns([1, 1])
         
         with col1:
-            st.subheader("Bill Image Preview")
+            st.subheader(f"Bill Image Preview ({selected_bill_id})")
             from pathlib import Path
             
             extensions = [".png", ".jpg", ".jpeg", ".PNG", ".JPG"]
@@ -73,14 +75,14 @@ if tab == "Level 1: JSON Extraction":
                 st.warning(f"Image not found for {selected_bill_id}")
                 
         with col2:
-            st.subheader("Extracted JSON")
+            st.subheader(f"Extracted JSON ({selected_bill_id})")
             if not filtered_row.empty:
                 raw_json = filtered_row.iloc[0]['json']
                 if pd.isna(raw_json) or str(raw_json).strip() == "":
                     st.info("No JSON extracted yet or extraction pending.")
                 else:
                     try:
-                        parsed_json = json.loads(raw_json) if isinstance(raw_json, str) else raw_json
+                        parsed_json = json.loads(raw_json) if isinstance(raw_json, str) else json.loads(str(raw_json).replace("'", '"'))
                         st.json(parsed_json)
                     except Exception:
                         st.text(str(raw_json))
