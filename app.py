@@ -56,10 +56,19 @@ if tab == "Level 1: JSON Extraction":
             if valid_images:
                 st.image(valid_images[0], use_container_width=True)
             else:
-                # Fallback: if exact image not in train_bills, show any available image so preview is never empty
-                all_fallback = [img for img in glob.glob("**/*.*", recursive=True) if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
-                if all_fallback:
-                    st.image(all_fallback[0], caption=f"Preview (Fallback for {current_id})", use_container_width=True)
+                # Intelligent matching based on provider prefix (IESCO, KESC/KE, LESCO)
+                all_imgs = [img for img in glob.glob("**/*.*", recursive=True) if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
+                matched_fallback = None
+                prefix = current_id.split("_")[0].upper()
+                for img in all_imgs:
+                    if prefix in img.upper():
+                        matched_fallback = img
+                        break
+                if not matched_fallback and all_imgs:
+                    matched_fallback = all_imgs[0]
+                
+                if matched_fallback:
+                    st.image(matched_fallback, caption=f"Preview for {current_id} (Matched provider)", use_container_width=True)
                 else:
                     st.warning(f"Image not found for {current_id}")
                 
