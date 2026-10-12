@@ -31,7 +31,7 @@ KESC_0008,Q5,Am I consuming more units than in the same month last year?,Yes, sl
 KESC_0008,Q6,"What are my average monthly units consumed, and how does this month compare?",Average is 330 units; current is 350 units.
 KESC_0008,Q7,How many more units do I consume in summer (June-August) than in winter (December-February)?,Summer consumption is 140 units higher.
 KESC_0008,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?",Yes, payment history is consistent.
-KESC_0008,Q9,Have my units consumed gone up or down over the last 3 months?,Gone up over the last 3 months.
+KESC_0008,Q9,Screenshot / units consumed have gone up over the last 3 months.,Units have gone up over the last 3 months.
 KESC_0008,Q10,"Based on the 12 months trend, how many units should I expect to consume next month?",Approximately 340 units.
 KESC_0008,Q11,"If I wanted to spread my electricity cost evenly across the year, how much should I set aside each month?",Approximately Rs. 8,900 per month.
 KESC_0008,Q12,"If I consume the same units as last month, what would my bill be roughly?",Roughly Rs. 9,570 based on current rates.
@@ -54,7 +54,7 @@ LESCO_0006,Q4,"If I don't pay on time, what late payment surcharges will be adde
 LESCO_0006,Q5,Am I consuming more units than in the same month last year?,Slightly higher than last year.
 LESCO_0006,Q6,"What are my average monthly units consumed, and how does this month compare?",Average is 315 units; current is 350 units.
 LESCO_0006,Q7,How many more units do I consume in summer (June-August) than in winter (December-February)?,Summer consumption is 135 units higher.
-LESCO_0006,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?",Yes, payments are up to date.
+LESCO_0006,Q8,"Looking at the payments for the 12 months shown on the bill, have I been paying every bill?,Yes, payments are up to date.
 LESCO_0006,Q9,Have my units consumed gone up or down over the last 3 months?,Gone up over the last 3 months.
 LESCO_0006,Q10,"Based on the 12 months trend, how many units should I expect to consume next month?",Approximately 335 units.
 LESCO_0006,Q11,"If I wanted to spread my electricity cost evenly across the year, how much should I set aside each month?",Approximately Rs. 8,300 per month.
