@@ -48,31 +48,15 @@ if tab == "Level 1: JSON Extraction":
         
         with col1:
             st.subheader(f"Bill Image Preview ({selected_bill_id})")
-            from pathlib import Path
             
-            extensions = [".png", ".jpg", ".jpeg", ".PNG", ".JPG"]
-            search_dirs = [Path("test/bills"), Path("train_bills"), Path("bills"), Path("data/bills"), Path(".")]
-            
-            matched_img = None
-            for d in search_dirs:
-                if d.exists():
-                    for ext in extensions:
-                        candidate = d / f"{selected_bill_id}{ext}"
-                        if candidate.is_file():
-                            matched_img = str(candidate)
-                            break
-                if matched_img:
-                    break
-                    
-            if not matched_img:
-                all_imgs = glob.glob("train_bills/*.*") + glob.glob("test/bills/*.*") + glob.glob("**/*.jpg", recursive=True) + glob.glob("**/*.png", recursive=True)
-                if all_imgs:
-                    matched_img = all_imgs[0]
+            current_id = str(selected_bill_id).strip()
+            found_images = glob.glob(f"**/{current_id}.*", recursive=True)
+            valid_images = [img for img in found_images if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
 
-            if matched_img:
-                st.image(matched_img, use_container_width=True)
+            if valid_images:
+                st.image(valid_images[0], use_container_width=True)
             else:
-                st.warning(f"Image not found for {selected_bill_id}")
+                st.warning(f"Image not found for {current_id}")
                 
         with col2:
             st.subheader(f"Extracted JSON ({selected_bill_id})")
