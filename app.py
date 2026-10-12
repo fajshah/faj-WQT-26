@@ -5,7 +5,7 @@ import glob
 from PIL import Image
 
 def find_bill_image(bill_id: str):
-    search_dirs = ["test/bills", "train_bills", "bills", "data/bills", "."]
+    search_dirs = ["train_bills", "test/bills", "bills", "data/bills", "."]
     extensions = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"]
     for d in search_dirs:
         for ext in extensions:
@@ -15,6 +15,10 @@ def find_bill_image(bill_id: str):
     matches = glob.glob(f"**/{bill_id}.*", recursive=True)
     if matches:
         return matches[0]
+    # Fallback to display any available image in train_bills if specific bill image is missing in sample repo
+    fallback_imgs = glob.glob("train_bills/*.*") + glob.glob("test/bills/*.*") + glob.glob("**/*.jpg", recursive=True) + glob.glob("**/*.png", recursive=True)
+    if fallback_imgs:
+        return fallback_imgs[0]
     return None
 
 st.set_page_config(page_title="Utility Bill Decoder", page_icon="⚡", layout="wide")
