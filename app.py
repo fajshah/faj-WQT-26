@@ -37,58 +37,55 @@ if tab == "Level 1: JSON Extraction":
     st.header("Level 1: Structured JSON Extraction")
     if os.path.exists(l1_path):
         df_l1 = pd.read_csv(l1_path)
-        bill_ids = df_l1["bill_id"].tolist()
-        selected_bill = st.selectbox("Select Bill ID", bill_ids)
+        bill_ids_list = df_l1["bill_id"].tolist()
+        selected_bill_id = st.selectbox("Select Bill ID", options=bill_ids_list)
         
-        row = df_l1[df_l1["bill_id"] == selected_bill].iloc[0]
+        filtered_row = df_l1[df_l1['bill_id'] == selected_bill_id]
+        
         col1, col2 = st.columns([1, 1])
         
         with col1:
             st.subheader("Bill Image Preview")
             from pathlib import Path
-            selected_bill_id = selected_bill
             
-            # Search directories where bills might exist
-            possible_dirs = [
-                Path("test/bills"),
-                Path("train_bills"),
-                Path("bills"),
-                Path("test"),
-                Path("data/bills"),
-                Path("output")
-            ]
+            extensions = [".png", ".jpg", ".jpeg", ".PNG", ".JPG"]
+            search_dirs = [Path("test/bills"), Path("train_bills"), Path("bills"), Path("data/bills"), Path(".")]
             
-            image_path = None
-            extensions = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"]
-            
-            for directory in possible_dirs:
-                if directory.exists():
+            matched_img = None
+            for d in search_dirs:
+                if d.exists():
                     for ext in extensions:
-                        candidate = directory / f"{selected_bill_id}{ext}"
+                        candidate = d / f"{selected_bill_id}{ext}"
                         if candidate.is_file():
-                            image_path = str(candidate)
+                            matched_img = str(candidate)
                             break
-                if image_path:
+                if matched_img:
                     break
-            
-            if not image_path:
-                # Fallback to any available image in workspace if specific file is absent
+                    
+            if not matched_img:
                 all_imgs = glob.glob("train_bills/*.*") + glob.glob("test/bills/*.*") + glob.glob("**/*.jpg", recursive=True) + glob.glob("**/*.png", recursive=True)
                 if all_imgs:
-                    image_path = all_imgs[0]
-            
-            if image_path:
-                st.image(image_path, use_container_width=True)
+                    matched_img = all_imgs[0]
+
+            if matched_img:
+                st.image(matched_img, use_container_width=True)
             else:
-                st.warning("Image not found for this bill ID.")
+                st.warning(f"Image not found for {selected_bill_id}")
                 
         with col2:
             st.subheader("Extracted JSON")
-            json_str = row["json"]
-            if pd.isna(json_str) or json_str.strip() == "":
-                st.info("No JSON extracted yet or extraction pending.")
+            if not filtered_row.empty:
+                raw_json = filtered_row.iloc[0]['json']
+                if pd.isna(raw_json) or str(raw_json).strip() == "":
+                    st.info("No JSON extracted yet or extraction pending.")
+                else:
+                    try:
+                        parsed_json = json.loads(raw_json) if isinstance(raw_json, str) else raw_json
+                        st.json(parsed_json)
+                    except Exception:
+                        st.text(str(raw_json))
             else:
-                st.json(json_str)
+                st.info("No data found for selected bill.")
         
         st.markdown("---")
         st.subheader("All Level 1 Records")
