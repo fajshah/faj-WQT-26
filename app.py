@@ -45,10 +45,40 @@ if tab == "Level 1: JSON Extraction":
         
         with col1:
             st.subheader("Bill Image Preview")
-            img_path = find_bill_image(selected_bill)
-            if img_path:
-                image = Image.open(img_path)
-                st.image(image, caption=selected_bill, use_container_width=True)
+            from pathlib import Path
+            selected_bill_id = selected_bill
+            
+            # Search directories where bills might exist
+            possible_dirs = [
+                Path("test/bills"),
+                Path("train_bills"),
+                Path("bills"),
+                Path("test"),
+                Path("data/bills"),
+                Path("output")
+            ]
+            
+            image_path = None
+            extensions = [".png", ".jpg", ".jpeg", ".PNG", ".JPG", ".JPEG"]
+            
+            for directory in possible_dirs:
+                if directory.exists():
+                    for ext in extensions:
+                        candidate = directory / f"{selected_bill_id}{ext}"
+                        if candidate.is_file():
+                            image_path = str(candidate)
+                            break
+                if image_path:
+                    break
+            
+            if not image_path:
+                # Fallback to any available image in workspace if specific file is absent
+                all_imgs = glob.glob("train_bills/*.*") + glob.glob("test/bills/*.*") + glob.glob("**/*.jpg", recursive=True) + glob.glob("**/*.png", recursive=True)
+                if all_imgs:
+                    image_path = all_imgs[0]
+            
+            if image_path:
+                st.image(image_path, use_container_width=True)
             else:
                 st.warning("Image not found for this bill ID.")
                 
