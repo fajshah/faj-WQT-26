@@ -102,7 +102,17 @@ elif tab == "Level 2: Q&A Results":
         st.sidebar.markdown("### 📋 Select Q&A Bill ID")
         selected_bill = st.sidebar.radio("Choose Bill for Q&A", options=bill_ids, key="sidebar_qa_radio")
         
-        filtered_df = df_l2[df_l2["bill_id"] == selected_bill]
+        filtered_df = df_l2[df_l2["bill_id"] == selected_bill].copy()
+        
+        # Sort questions cleanly by question_id (Q1, Q2, ..., Q12)
+        def q_sort_key(qid):
+            try:
+                return int(str(qid).replace("Q", "").replace("q", ""))
+            except:
+                return 0
+        if 'question_id' in filtered_df.columns:
+            filtered_df['sort_key'] = filtered_df['question_id'].apply(q_sort_key)
+            filtered_df = filtered_df.sort_values('sort_key').drop(columns=['sort_key'])
         
         col1, col2 = st.columns([1, 1])
         with col1:
