@@ -95,30 +95,49 @@ if tab == "Level 1: JSON Extraction":
 
 elif tab == "Level 2: Q&A Results":
     st.header("Level 2: Bill Q&A Answers")
-    if os.path.exists(l2_path):
-        df_l2 = pd.read_csv(l2_path, on_bad_lines='skip')
-        bill_ids = df_l2["bill_id"].unique().tolist()
+    
+    # 1. Read the level2.csv
+    csv_path = "output/level2.csv"
+    if not os.path.exists(csv_path):
+        csv_path = "test/csv/level2.csv"
+
+    if os.path.exists(csv_path):
+        df_l2 = pd.read_csv(csv_path, on_bad_lines='skip')
+        # Ensure correct columns and clean strings
+        df_l2.columns = [c.strip() for c in df_l2.columns]
+        for col in ['bill_id', 'question_id', 'question', 'answer']:
+            if col in df_l2.columns:
+                df_l2[col] = df_l2[col].astype(str).str.strip()
+    else:
+        df_l2 = pd.DataFrame(columns=['bill_id', 'question_id', 'question', 'answer'])
+
+    # 2. Get unique bills
+    bill_list = df_l2['bill_id'].unique().tolist() if not df_l2.empty else []
+
+    st.sidebar.subheader("Select Q&A Bill ID")
+    if bill_list:
+        selected_qa_bill = st.sidebar.radio("Choose Bill for Q&A", bill_list, key="sidebar_qa_radio_new")
+    else:
+        selected_qa_bill = None
+        st.sidebar.info("No bills found in level2.csv")
+
+    if selected_qa_bill:
+        # Filter rows for this bill
+        sub_df = df_l2[df_l2['bill_id'] == selected_qa_bill].copy()
         
-        st.sidebar.markdown("### 📋 Select Q&A Bill ID")
-        selected_bill = st.sidebar.radio("Choose Bill for Q&A", options=bill_ids, key="sidebar_qa_radio")
+        # Sort helper to ensure Q1..Q12 order
+        def extract_num(qid):
+            import re
+            nums = re.findall(r'\d+', str(qid))
+            return int(nums[0]) if nums else 999
         
-        filtered_df = df_l2[df_l2["bill_id"] == selected_bill].copy()
-        
-        # Sort questions cleanly by question_id (Q1, Q2, ..., Q12)
-        def q_sort_key(qid):
-            try:
-                return int(str(qid).replace("Q", "").replace("q", ""))
-            except:
-                return 0
-        if 'question_id' in filtered_df.columns:
-            filtered_df['sort_key'] = filtered_df['question_id'].apply(q_sort_key)
-            filtered_df = filtered_df.sort_values('sort_key').drop(columns=['sort_key'])
-        
+        sub_df['q_num'] = sub_df['question_id'].apply(extract_num)
+        sub_df = sub_df.sort_values('q_num')
+
         col1, col2 = st.columns([1, 1])
         with col1:
-            st.subheader(f"Bill Image ({selected_bill})")
-            
-            current_id = str(selected_bill).strip()
+            st.subheader(f"Bill Image ({selected_qa_bill})")
+            current_id = str(selected_qa_bill).strip()
             found_images = glob.glob(f"**/{current_id}.*", recursive=True)
             valid_images = [img for img in found_images if img.lower().endswith(('.png', '.jpg', '.jpeg'))]
 
@@ -139,22 +158,28 @@ elif tab == "Level 2: Q&A Results":
                     st.image(matched_fallback, caption=f"Preview for {current_id}", use_container_width=True)
                 else:
                     st.warning("Image not found for this bill ID.")
-                
+
         with col2:
-            st.subheader(f"Questions & Answers ({selected_bill})")
-            for _, r in filtered_df.iterrows():
-                st.markdown(f"**Q ({r['question_id']}):** {r['question']}")
-                ans = r['answer']
-                if pd.isna(ans) or str(ans).strip() == "":
+            st.subheader(f"Q&A for {selected_qa_bill}")
+            for _, row in sub_df.iterrows():
+                qid = row.get('question_id', '')
+                q_text = row.get('question', '')
+                ans_text = row.get('answer', '')
+                
+                st.markdown(f"**Q ({qid}):** {q_text}")
+                if pd.isna(ans_text) or str(ans_text).strip() == "" or str(ans_text).lower() == "nan":
                     st.markdown("*Answer: [Pending/Not Answered]*")
                 else:
-                    st.success(f"**Answer:** {ans}")
+                    st.success(f"**Answer:** {ans_text}")
                 st.markdown("---")
-        
-        st.subheader("Full Q&A Table")
-        st.dataframe(df_l2, use_container_width=True)
+
+    # Full Table Display
+    st.subheader("Full Q&A Table")
+    if not df_l2.empty:
+        display_cols = [c for c in ['bill_id', 'question_id', 'question', 'answer'] if c in df_l2.columns]
+        st.dataframe(df_l2[display_cols], use_container_width=True)
     else:
-        st.error("output/level2.csv not found! Run main.py first.")
+        st.warning("level2.csv is empty or missing.")
 
 else:
     st.header("Bill Images Gallery")
